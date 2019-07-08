@@ -5,4 +5,4 @@
  * @author muralesx
  *
  */
-package com.sridhar.springbootjava.server;
+package com.sridhar.springbootjava;

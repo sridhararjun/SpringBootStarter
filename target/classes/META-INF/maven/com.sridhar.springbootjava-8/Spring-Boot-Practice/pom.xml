@@ -5,7 +5,13 @@
 	<groupId>com.sridhar.springbootjava-8</groupId>
 	<artifactId>Spring-Boot-Practice</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-
+<!-- 
+	The dependencies tag downloads the maven dependencies mentioned.But, it the jar versions are controlled by
+	the Parent.The Spring Boot version mentioned takes care of the pre-approved compatible versions of each framework jars
+	If you want to check,
+		Just change the version of the Spring-boot-starter-parent and the maven dependencies jar versions will change
+		according to each dependent compatibility
+ -->
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>

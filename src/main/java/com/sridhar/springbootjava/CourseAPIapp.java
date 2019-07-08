@@ -1,4 +1,4 @@
-package com.sridhar.springbootjava.server;
+package com.sridhar.springbootjava;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
