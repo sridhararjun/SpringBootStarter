@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Implementation-Title: Spring-Boot-Practice
 Implementation-Version: 0.0.1-SNAPSHOT
-Built-By: muralesx
+Built-By: sridhar
 Implementation-Vendor-Id: com.sridhar.springbootjava-8
 Build-Jdk: 1.8.0_201
 Implementation-URL: http://projects.spring.io/spring-boot/Spring-Boot-
