@@ -3,11 +3,14 @@
  */
 package com.sridhar.springbootjava.topic;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 /**
  * @author muralesx
@@ -22,9 +25,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class TopicService {
 
-	private List<Topic> topicList = Arrays.asList(new Topic("Spring", "Spring Controller", "Spring description"),
-			new Topic("Hibernate", "hibernate Controller", "Hibernate description"),
-			new Topic("JS", "JS Controller", "JS description"));
+	/*
+	 * Arrays.asList gives an immutable array to list.so, declare it like new
+	 * ArrayList<>(Arrays.asList.....
+	 */
+	private List<Topic> topicList = new ArrayList<>(
+			Arrays.asList(new Topic("Spring", "Spring Controller", "Spring description"),
+					new Topic("Hibernate", "hibernate Controller", "Hibernate description"),
+					new Topic("JS", "JS Controller", "JS description")));
 
 	/**
 	 * @return the topicList
@@ -42,11 +50,34 @@ public class TopicService {
 			}
 		}).findFirst().get();
 
-		// return topicList.stream().filter(t -> t.getId().equals(id)).findFirst().get();
+		// return topicList.stream().filter(t ->
+		// t.getId().equals(id)).findFirst().get();
 	}
 
-	public void add(Topic topic) {
+	public void addTopic(Topic topic) {
 		topicList.add(topic);
+	}
+
+	public void updateTopic(String id, Topic topic) {
+		if (!StringUtils.isEmpty(id) && topic != null) {
+			for (int i = 0; i < topicList.size(); i++) {
+				if (topicList.get(i).getId().equals(id)) {
+					topicList.set(i, topic);
+					return;
+				}
+			}
+		}
+	}
+
+	public void deleteTopic(String id) {
+		// topicList.removeIf(new Predicate<Topic>() {
+		//
+		// @Override
+		// public boolean test(Topic t) {
+		// return t.getId().equals(id);
+		// }
+		// });
+		topicList.removeIf(t -> t.getId().equals(id));
 	}
 
 }

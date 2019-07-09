@@ -40,12 +40,27 @@ public class TopicController {
 	/*
 	 * 
 	 * @RequestBody takes care of converting the incoming type in the request to the
-	 * specified argument type
+	 * specified argument type Its like telling the application to take the TOPIC
+	 * instance from the request payload
 	 * 
+	 * Also, When trying to hit the POST request from a rest-api client like POSTMAN
+	 * make sure you set the content-type = application/json, because by default it
+	 * thinks that the sent body is a string.so we had to explicitly let the
+	 * application knwo that its a JSON object
 	 */
 	@RequestMapping(method = RequestMethod.POST, value = "/topics")
 	public void addTopics(@RequestBody Topic topic) {
-		topicService.add(topic);
+		topicService.addTopic(topic);
+	}
+
+	@RequestMapping(method = RequestMethod.PUT, value = "/topics/{id}")
+	public void addTopics(@RequestBody Topic topic, @PathVariable("id") String id) {
+		topicService.updateTopic(id, topic);
+	}
+
+	@RequestMapping(method = RequestMethod.DELETE, value = "/topics/{id}")
+	public void deleteTopics(@PathVariable("id") String id) {
+		topicService.deleteTopic(id);
 	}
 
 }
