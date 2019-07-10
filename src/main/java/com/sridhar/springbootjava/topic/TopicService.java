@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -26,6 +27,17 @@ import org.springframework.util.StringUtils;
 public class TopicService {
 
 	/*
+	 * The framework sees the embedded Derby Database in the classpath and assumes
+	 * that it is the database to connect to.So,No connection information is
+	 * necessary.
+	 * 
+	 *
+	 * 
+	 */ 
+	@Autowired
+	private TopicRepository topicRepository;
+
+	/*
 	 * Arrays.asList gives an immutable array to list.so, declare it like new
 	 * ArrayList<>(Arrays.asList.....
 	 */
@@ -38,35 +50,54 @@ public class TopicService {
 	 * @return the topicList
 	 */
 	public List<Topic> getTopicList() {
-		return topicList;
+
+		// topicRepository.findAll().forEach(new Consumer<Topic>() {
+		//
+		// @Override
+		// public void accept(Topic t) {
+		// // TODO Auto-generated method stub
+		// topicList.add(t);
+		// }
+		// });
+
+		// topicRepository.findAll().forEach(t -> topicList.add(t));
+		List<Topic> topics = new ArrayList<Topic>();
+		topicRepository.findAll().forEach(topics::add);
+
+		return topics;
 	}
 
 	public Topic getTopic(String id) {
-		return topicList.stream().filter(new Predicate<Topic>() {
-
-			@Override
-			public boolean test(Topic t) {
-				return t.getId().equals(id);
-			}
-		}).findFirst().get();
+//		return topicList.stream().filter(new Predicate<Topic>() {
+//
+//			@Override
+//			public boolean test(Topic t) {
+//				return t.getId().equals(id);
+//			}
+//		}).findFirst().get();
 
 		// return topicList.stream().filter(t ->
 		// t.getId().equals(id)).findFirst().get();
+		
+		return topicRepository.findOne(id);
 	}
 
 	public void addTopic(Topic topic) {
-		topicList.add(topic);
+//		topicList.add(topic);
+		topicRepository.save(topic);
 	}
 
 	public void updateTopic(String id, Topic topic) {
-		if (!StringUtils.isEmpty(id) && topic != null) {
-			for (int i = 0; i < topicList.size(); i++) {
-				if (topicList.get(i).getId().equals(id)) {
-					topicList.set(i, topic);
-					return;
-				}
-			}
-		}
+//		if (!StringUtils.isEmpty(id) && topic != null) {
+//			for (int i = 0; i < topicList.size(); i++) {
+//				if (topicList.get(i).getId().equals(id)) {
+//					topicList.set(i, topic);
+//					return;
+//				}
+//			}
+//		}
+		
+		topicRepository.save(topic);
 	}
 
 	public void deleteTopic(String id) {
@@ -77,7 +108,10 @@ public class TopicService {
 		// return t.getId().equals(id);
 		// }
 		// });
-		topicList.removeIf(t -> t.getId().equals(id));
+		
+//		topicList.removeIf(t -> t.getId().equals(id));
+		
+		topicRepository.delete(id);
 	}
 
 }
